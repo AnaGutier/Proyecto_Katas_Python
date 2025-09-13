@@ -205,7 +205,39 @@ factorial (5)
 7. Genera una función que convierta una lista de tuplas a una lista de strings.
 Usa la función map().
 '''
+# Genero una lista de tuplas para la comrpobación
+lista_de_tuplas = [('primera', 'tupla'), ('otra', 'más', 'aquí'), ('y', 3, 54)]
 
+def tupla_a_lista(listita):
+    """
+    Convierte una lista de tuplas a lista de strings
+
+    Args:
+        listita (list): lista con tuplas
+
+    Return:
+        lista de strings (list)
+    """
+    lista_de_strings = []
+
+    for elemento in listita:
+        pasar_elementos_a_str = map(str, elemento)
+        unir_cadenas = " ".join(pasar_elementos_a_str)
+        lista_de_strings.append(unir_cadenas)
+
+    return lista_de_strings
+
+# Compruebo el funcionamiento
+tupla_a_lista(lista_de_tuplas)
+
+# Podría realizarse con una lambda
+def ejercicio_7 (listita):
+    
+    nueva_lista = list(map(lambda elemento: " ".join(map(str, elemento)), listita))
+
+    return nueva_lista
+
+ejercicio_7 (lista_de_tuplas)
 
 '''
 8. Escribe un programa que pida al usuario dos números e intente dividirlos.
@@ -236,19 +268,37 @@ filtrar_mascotas (mascotas_varias)
 
 
 '''
+10. Escribe una función que reciba una lista de números y calcule su promedio.
+Si la lista está vacía, lanza una excepción personalizada y maneja el error adecuadamente.
+'''
+numeritos = [6, 72, 14, 3, 12]
+lista_de_nada = []
 
+def promedio (lista):
+    if len(lista) == 0: 
+        promedio = 'La lista de números no contiene datos, por favor incluye algunos para calcular el promedio'
+
+    else: 
+        promedio = round(sum(lista) / len(lista), 2)
+
+    return promedio
+
+# Compruebo el funcionamiento 
+promedio (numeritos)
+promedio (lista_de_nada)
+
+
+'''
+11. Escribe un programa que pida al usuario que introduzca su edad.
+Si el usuario ingresa un valor no numérico o un valor fuera del rango esperado
+(por ejemplo, menor que 0 o mayor que 120), maneja las excepciones adecuadamente.
 '''
 
 
 
 '''
-
-'''
-
-
-
-'''
-
+12. Genera una función que al recibir una frase devuelva una lista con la longitud de cada palabra.
+Usa la función map().
 '''
 
 

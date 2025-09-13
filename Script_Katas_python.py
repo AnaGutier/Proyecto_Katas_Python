@@ -145,21 +145,73 @@ La función debe calcular la media de los números en la lista y determinar si l
 Si es así, el estado será "aprobado", de lo contrario, será "suspenso".
 La función debe devolver una tupla que contenga la media y el estado.
 '''
+#Genero una la lista de calificaciones de un grupo imaginario y establezco la nota del aprobado
+calificaciones = [5, 3, 7.2, 8.9, 10, 2, 1.5, 4, 6.3, 7, 5.2]
+
+def media_aprobada_o_no (calificaciones, nota_aprobado = 5):
+    """Esta funcion hace la media de las calificaciones y las compara con la nota mínima para aprobar
+    para así detreminar si globalmente se aprueba o no al grupo.
+    
+    Args:
+        (list): lista de calificaciones.
+        (int, float): valor por defecto 5 (posible añadir otro), nota con la que se aprueba.
+
+    Returns: 
+        (tuple): media de calificaciones y si se aprueba o no globalmente (media, estado)
+    """
+    # Calculo la media redondeado a 2 decimales
+    media_global = round(sum (calificaciones) / len (calificaciones), 2)
+    # Creo el estado aprobado o suspenso en función de la media global
+    if media_global >= nota_aprobado:
+        estado = 'aprobado'
+    else:
+        estado = 'suspenso'
+    # El return así escrito devuelve automáticamente una tupla
+    return media_global, estado  
+
+# Compruebo el funcionamiento
+media_aprobada_o_no (calificaciones)
+
+# Pruebo ahora que la nota de aprobado podría cambiarse
+media_aprobada_o_no (calificaciones, 7)
 
 
 '''
+6. Escribe una función que calcule el factorial de un número de manera recursiva.
+'''
+def factorial (numero):
+    """Función recursiva que calcula el factorial de un número
 
+    Args:
+        numero (int)
+
+    Return: 
+        factorial (int)
+    """
+    # Como el factorial de 0 es por definición 1, agrego este caso concreto
+    if numero == 0: 
+       numero_factorial = 1
+    
+    else:
+           numero_factorial = numero * factorial (numero - 1)
+     
+    return numero_factorial
+
+# Compruebo el funcionamiento
+factorial (5)
+
+
+'''
+7. Genera una función que convierta una lista de tuplas a una lista de strings.
+Usa la función map().
 '''
 
 
-
 '''
-
-'''
-
-
-'''
-
+8. Escribe un programa que pida al usuario dos números e intente dividirlos.
+Si el usuario ingresa un valor no numérico o intenta dividir por cero,
+maneja esas excepciones de manera adecuada.
+Asegúrate de mostrar un mensaje indicando si la división fue exitosa o no.
 '''
 
 

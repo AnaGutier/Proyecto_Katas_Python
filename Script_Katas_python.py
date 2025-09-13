@@ -218,9 +218,21 @@ Asegúrate de mostrar un mensaje indicando si la división fue exitosa o no.
 
 
 '''
-
+9. Escribe una función que tome una lista de nombres de mascotas como parámetro y devuelva una nueva lista
+excluyendo ciertas mascotas prohibidas en España.
+La lista de mascotas a excluir es ["Mapache", "Tigre", "Serpiente Pitón", "Cocodrilo", "Oso"].
+Usa la función filter()
 '''
+# Creo una lista de mascotas
+mascotas_varias = ["Cabra", "Perro", "Tigre", "Vaca", "Serpiente Pitón", "Gato", "Cocodrilo", "Oso"]
 
+def filtrar_mascotas(mascotas):
+    mascotas_prohibidas = ["Mapache", "Tigre", "Serpiente Pitón", "Cocodrilo", "Oso"]
+    # filter mantiene solo los elementos que cumplen la condición
+    return list(filter(lambda elemento: elemento not in mascotas_prohibidas, mascotas))
+
+#Compruebo el funcionamiento 
+filtrar_mascotas (mascotas_varias)
 
 
 '''

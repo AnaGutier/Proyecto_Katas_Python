@@ -279,7 +279,7 @@ def promedio (lista):
         promedio = 'La lista de números no contiene datos, por favor incluye algunos para calcular el promedio'
 
     else: 
-        promedio = round(sum(lista) / len(lista), 2)
+        promedio = round(sum(lista) / len(lista), 2) #Redondeo el resultado para evitar decimales innecesarios
 
     return promedio
 
@@ -304,6 +304,310 @@ Usa la función map().
 
 
 '''
+13. Genera una función la cual, para un conjunto de caracteres, devuelva una lista de tuplas con cada letra en mayúsculas y minúsculas.
+Las letras no pueden estar repetidas. Usa la función map(). 
+'''
+# Genero una lista de palabras
+caracteres = 'frasecita'
+
+def letras_mayus_minus(conjunto):
+    """
+    Devuelve una lista de tuplas con cada letra en mayúsculas y minúsculas sin repetir letras.
+
+    Args:
+        conjunto (str) = conjunto de caracteres
+
+    Return: 
+        (list)
+    """
+    # Creo un conjunto para evitar duplicados
+    letras = set(conjunto)
+    
+    # Uso map() para transformar cada letra en una tupla
+    resultado = list(map(lambda c: (c.upper(), c.lower()), letras))
+    
+    return resultado
+
+# Compronación
+letras_mayus_minus(caracteres)
+letras_mayus_minus('cualquiera')
+
+'''
+14. Crea una función que retorne las palabras de una lista de palabras que comience con una letra en especifico.
+Usa la función filter().
+'''
+# Genero una lista de palabras 
+palabras = ["correr", "programar", "casco", "portada", "juego", "pecera"]
+
+def palabras_por_letra(lista, letra):
+    """
+    Retorna las palabras que comienzan con una letra específica.
+    
+    """
+    return list(filter(lambda palabra: palabra.startswith(letra), lista))
+
+# Comprobación
+palabras_por_letra(palabras, 'p')
+palabras_por_letra(palabras, 'c') 
+
+'''
+15. Crea una función lambda que sume 3 a cada número de una lista dada.
+'''
+# Creo una lista de números para la comprobación
+numeros = [1, 2, 3, 4, 5]
+def sumar_3 (numeros):
+    nueva_lista = list(map(lambda x: x + 3, numeros))
+    return nueva_lista
+# Compruebo el funcionamiento
+sumar_3 (numeros)
+
+# En una sola línea
+nueva_lista = list(map(lambda x: x + 3, numeros))
+print(nueva_lista)
+
+'''
+16. Escribe una función que tome una cadena de texto y un número entero n como parámetros
+y devuelva una lista de todas las palabras que sean más largas que n.
+Usa la función filter().
+'''
+# Genero una cadena para la comprobación
+frase = "Tengo un perro de pelo largo"
+
+def palabras_mas_largas(cadena, n):
+    """
+    De una lista de strings devuelve las de longitud mayor que n.
+
+    Args (str): 
+        cadena de palabras
+
+    Return (list(str)):
+        palabras con len>n
+    """
+    palabras = cadena.split()
+    return list(filter(lambda palabra: len(palabra) > n, palabras))
+
+
+# Comprobación
+print(palabras_mas_largas(frase, 4))
+
+
+'''
+17. Crea una función que tome una lista de dígitos y devuelva el número correspondiente.
+Por ejemplo, [5,7,2] corresponde al número quinientos setenta y dos (572).
+Usa la función reduce().
+'''
+# Creo la lista para la comprobación
+numeros_separados = [3, 2, 1, 7]
+
+# Primero importo la función reduce
+from functools import reduce
+
+def juntar_numeros (lista): 
+    """ Une en uno sólo los números de una lista
+
+    Args:
+        lista (list): lista de números separados
+
+    Return:
+        numero unido (int)
+    """
+    
+    return reduce(lambda x,y:x*10 + y, lista)
+#De esta forma se coje el dígito de la lsita y se multiplica *10 sumando así el siguiente, resultando unidos
+
+juntar_numeros (numeros_separados)
+
+
+
+'''
+18. Escribe un programa en Python que cree una lista de diccionarios que contenga información de estudiantes (nombre, edad, calificación)
+y use la función filter para extraer a los estudiantes con una calificación mayor o igual a 90. 
+sa la función filter().
+'''
+
+
+
+'''
+19. Crea una función lambda que filtre los números impares de una lista dada.
+'''
+# Creo la lista para la comrpobación
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+def impares (numeros): 
+    numeros_impares = list(filter(lambda x: x % 2 != 0, numeros))
+    # La lambda identidica los números pares o impares en función de la división
+    #filter selecciona los que cimplen la condición y con list se pasan al formato lista
+    return numeros_impares
+
+#Comprobación
+impares (numeros)
+
+'''
+20. Para una lista con elementos tipo integer y string obtén una nueva lista sólo con los valores int. Usa la función
+filter()
+'''
+# Creo la lista para la comprobación
+lista_variada = ['cadena', 7, 3.2, 'cadenita', 32, 'cadenota', 5, 11] 
+
+def seleccionar_int (lista):
+    """ Selecciona los valores int de la lista y crea una nueva con estos
+
+    Args:
+        lista (lista de int y str): Lista de elementos int y str
+    Return:
+        lsita_int (list): lsita de sólo int
+    """
+    #isinstance evalua si el elemento es int, si es true filter lo acepta para pasarlo a la lista
+    return list(filter(lambda elemento: isinstance(elemento, int), lista))
+
+seleccionar_int (lista_variada)
+
+
+'''
+21. Crea una función que calcule el cubo de un número dado mediante una función lambda
+'''
+
+
+'''
+22. Dada una lista numérica, obtén el producto total de los valores de dicha lista.
+Usa la función reduce().
+'''
+lista_numerica = [1, 3, 6, 9]
+def producto_total (lista_numeros):
+    """Multiplica todos los numeros de una lsita entre sí
+
+    Args:
+        lista_numeros (lsit): lista sólo con números
+    Return:
+        producto (int, float): un único número
+    """
+    # Reduce importada previamente
+    # La lambda multiplica los elementos y reduce repite este en todo el iterable
+    return reduce(lambda x, y: x*y, lista_numeros) 
+producto_total (lista_numerica)
+
+'''
+23. Concatena una lista de palabras.Usa la función reduce().
+'''
+lista_de_palabras = ['voy','a', 'concatenar', 'esto']
+
+def concatenar_palabras (lista_a_concatenar):
+    """ De una lista de cadenas devuelve una cadena única con espacios entre estas
+    Args:
+        lista_a_concatenar (list): lista de str
+    Return:
+        lista_concatenada (str): cadena unida
+    """
+    lista_concatenada = reduce(lambda x, y: str(x) + ' ' + str(y), lista_a_concatenar)
+    # Cambio el tipo de los elementos de la lsita a str y unos uno con un espacio de por medio
+    return lista_concatenada
+
+# Comprobación
+concatenar_palabras(lista_de_palabras)
+
+'''
+24. Calcula la diferencia total en los valores de una lista. Usa la función reduce().
+'''
+list = [3, 5, 7, 4, 2, 10]
+#La lambda calcula la difernecia entre los primeros valores de la lista y reduce lo repite en todos los elementos existentes
+print (reduce (lambda x, y: x - y, list))
+
+'''
+25. Crea una función que cuente el número de caracteres en una cadena de texto dada.
+'''
+variable_cadena = 'cadena de texto cualquiera'
+
+def contar_caracteres (cadena):
+    """Cuenta los caracteres de una cadena
+
+    Args:
+        cadena (_type_): _description_
+    """
+    return len(cadena) #La función len() indica los caracteres que tiene una cadena 
+
+#Comprobación con variable y cadena directamente
+contar_caracteres ('cinco')
+contar_caracteres (variable_cadena) 
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
 
 '''
 
@@ -329,23 +633,14 @@ Usa la función map().
 '''
 
 
-
 '''
 
 '''
 
 
-
 '''
 
 '''
-
-
-
-'''
-
-'''
-
 
 
 '''
@@ -358,6 +653,35 @@ Usa la función map().
 '''
 
 
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
 
 '''
 
@@ -375,6 +699,14 @@ Usa la función map().
 '''
 
 
+'''
+
+'''
+
+
+'''
+
+'''
 
 
 '''
@@ -386,4 +718,112 @@ Usa la función map().
 
 '''
 
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
+
+
+'''
+
+'''
 import os

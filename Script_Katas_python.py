@@ -1,5 +1,12 @@
 # En este archivo se encuentran enunciados y resoluciones del proyecto de lógica: Katas Python
 
+# Aviso preliminar
+# Con el siguiente código he importado list ya que por error la sobreescribí en una variable haciendo que este comando no pudiera cumplir su función.
+# La he recuperado eliminando la variable y poniendo otro nombre en ella e imoprtándola de nuevo con el código que aparece a continuación:
+import builtins 
+list = builtins.list
+
+
 ''' 1. Escribe una función que reciba una cadena de texto como parámetro y devuelva
  un diccionario con las frecuencias de cada letra en la cadena.
  Los espacios no deben ser considerados.
@@ -194,7 +201,8 @@ def factorial (numero):
     
     else:
            numero_factorial = numero * factorial (numero - 1)
-     
+            # Hago que el número se multiplique por el numero -1 recurriendo a la propia función
+            # Así la función recorre todos los numeros menores que el insertado
     return numero_factorial
 
 # Compruebo el funcionamiento
@@ -218,6 +226,7 @@ def tupla_a_lista(listita):
     Return:
         lista de strings (list)
     """
+    # Creo la lista donde incluiré todos los strings
     lista_de_strings = []
 
     for elemento in listita:
@@ -234,7 +243,7 @@ tupla_a_lista(lista_de_tuplas)
 def ejercicio_7 (listita):
     
     nueva_lista = list(map(lambda elemento: " ".join(map(str, elemento)), listita))
-
+    # List convierte al formato listo el map que ha recorrido las variables
     return nueva_lista
 
 ejercicio_7 (lista_de_tuplas)
@@ -245,9 +254,36 @@ Si el usuario ingresa un valor no numérico o intenta dividir por cero,
 maneja esas excepciones de manera adecuada.
 Asegúrate de mostrar un mensaje indicando si la división fue exitosa o no.
 '''
+def dividir ():
+    """
+    Se le piden dos numeros al usuario para dividirlos
+    Si se ingresa un valor no numérico se responde: ''ArithmeticError
+    Si se intenta dividir entre 0 se responde: ''
 
+    Input:
+        num_1 (float)
+        num_2 (float)
 
+    Return:
+        resultado (str f'texto' + {float}) 
+    """
+    try: # pido al usuario que introduca los números y que estos se reconozcan como tales
+        num_1 = float(input('Introduce el primer número: '))
+        num_2 = float(input('Introduce el segundo número: '))
+        resultado = num_1 / num_2 # realizo la división 
+    except ValueError:
+        # Caso 1: no se introduce un número
+        print('Error: Debes introducir valores numéricos.')
 
+    except ZeroDivisionError:
+        # Caso 2: división por cero
+        print('Error: No se puede dividir entre cero. Inserta otro número.')
+
+    else:
+        # Solo se ejecuta si NO hubo errores
+        print(f'La división fue exitosa. Resultado: {resultado}')
+    
+# Comprobación realizada en un archivo.py incluido en el repositorio al necesitar inputs
 
 '''
 9. Escribe una función que tome una lista de nombres de mascotas como parámetro y devuelva una nueva lista
@@ -260,7 +296,7 @@ mascotas_varias = ["Cabra", "Perro", "Tigre", "Vaca", "Serpiente Pitón", "Gato"
 
 def filtrar_mascotas(mascotas):
     mascotas_prohibidas = ["Mapache", "Tigre", "Serpiente Pitón", "Cocodrilo", "Oso"]
-    # filter mantiene solo los elementos que cumplen la condición
+    # filter mantiene solo los elementos que cumplen la condición de que el elemento no esté en la lista prohibida
     return list(filter(lambda elemento: elemento not in mascotas_prohibidas, mascotas))
 
 #Compruebo el funcionamiento 
@@ -271,15 +307,16 @@ filtrar_mascotas (mascotas_varias)
 10. Escribe una función que reciba una lista de números y calcule su promedio.
 Si la lista está vacía, lanza una excepción personalizada y maneja el error adecuadamente.
 '''
+# Creo las listas para comprobar el resultado
 numeritos = [6, 72, 14, 3, 12]
 lista_de_nada = []
 
 def promedio (lista):
-    if len(lista) == 0: 
+    if len(lista) == 0: # En caso de que no haya datos, envío un mensaje
         promedio = 'La lista de números no contiene datos, por favor incluye algunos para calcular el promedio'
 
     else: 
-        promedio = round(sum(lista) / len(lista), 2) #Redondeo el resultado para evitar decimales innecesarios
+        promedio = round(sum(lista) / len(lista), 2) #Hago la media (suma de elementos entre la cantidad de estos) y redondeo
 
     return promedio
 
@@ -293,15 +330,46 @@ promedio (lista_de_nada)
 Si el usuario ingresa un valor no numérico o un valor fuera del rango esperado
 (por ejemplo, menor que 0 o mayor que 120), maneja las excepciones adecuadamente.
 '''
+def preguntar_edad ():
+    """
+    Se pregunta la edad al usuario, si es correcto se responde: 'Genial, ya veo que tienes {edad_usuario} años'
+        si inserta un valor no numérico se responde: 'Error: por favor, inserta únicamente el numero de años que tienes'
+        si inserta un valor que no esté entre 0 y 120 se responde: 'Error: por favor, inserta un número valido'
 
+    Input:
+        edad_usuario (int)
+
+    Return:
+        resultado (str f'texto' + {int}) 
+    """
+
+    try: # pido al usuario que introduca su edad
+        edad_usuario = round(int(input('Introduce tu edad:'))) 
+        # uso int para que en caso de numeros negativos o 0 de Value Error
+        # compruebo el rango
+        if edad_usuario < 120:
+            print('Error: por favor, inserta un número válido')
+        
+        else:
+            print(f'Genial, ya veo que tienes {edad_usuario} años')
+        
+    except ValueError:
+        # Caso 1: no se introduce un número, o este es 0 o negativo
+        print('Error: por favor, inserta únicamente el numero de años que tienes.')
+
+# Comprobación realizada en un archivo.py incluido en el repositorio al necesitar inputs
 
 
 '''
 12. Genera una función que al recibir una frase devuelva una lista con la longitud de cada palabra.
 Usa la función map().
 '''
+def longitudes_palabras(frase):
+    # Divido la cadena en palabras, examino la longitud de todas usando map y lo convierto en lista
+    return list(map(len, frase.split()))
 
-
+# Comprobación
+print(longitudes_palabras('hola qué tal'))  
 
 '''
 13. Genera una función la cual, para un conjunto de caracteres, devuelva una lista de tuplas con cada letra en mayúsculas y minúsculas.
@@ -344,6 +412,8 @@ def palabras_por_letra(lista, letra):
     Retorna las palabras que comienzan con una letra específica.
     
     """
+     # startswith() selecciona las cadenas que empiecen con la letra seleccionada
+    # la lambada repite eso con toda la lista y filter evalua los true para que list los ponga en una nueva lista
     return list(filter(lambda palabra: palabra.startswith(letra), lista))
 
 # Comprobación
@@ -357,6 +427,7 @@ palabras_por_letra(palabras, 'c')
 numeros = [1, 2, 3, 4, 5]
 def sumar_3 (numeros):
     nueva_lista = list(map(lambda x: x + 3, numeros))
+    # list hace que se nos devuelva una lista
     return nueva_lista
 # Compruebo el funcionamiento
 sumar_3 (numeros)
@@ -375,7 +446,7 @@ frase = "Tengo un perro de pelo largo"
 
 def palabras_mas_largas(cadena, n):
     """
-    De una lista de strings devuelve las de longitud mayor que n.
+    De una cadena devuelve los elementos de longitud mayor que n
 
     Args (str): 
         cadena de palabras
@@ -383,9 +454,10 @@ def palabras_mas_largas(cadena, n):
     Return (list(str)):
         palabras con len>n
     """
-    palabras = cadena.split()
+    palabras = cadena.split() # Secciono las palabras según los espacios
+    # La lambda recorre las palabras comparando su longitud con 'n' 
+    # List convierte a una lista los valores que filter pasa por true 
     return list(filter(lambda palabra: len(palabra) > n, palabras))
-
 
 # Comprobación
 print(palabras_mas_largas(frase, 4))
@@ -424,8 +496,23 @@ juntar_numeros (numeros_separados)
 y use la función filter para extraer a los estudiantes con una calificación mayor o igual a 90. 
 sa la función filter().
 '''
+def filtrar_estudiantes():
+    # Lista de diccionarios con estudiantes
+    estudiantes = [ #Pongo el dicc dentro de la función porque se inica que el programa debe crear la lista
+        {"nombre": "Ana", "edad": 25, "calificación": 95},
+        {"nombre": "Marta", "edad": 20, "calificación": 88},
+        {"nombre": "Alvarito", "edad": 18, "calificación": 92},
+        {"nombre": "Pau", "edad": 27, "calificación": 75},
+    ]
+    
+    # Usamo filter para calificación >= 90
+    sobresalientes = list(filter(lambda est: est["calificación"] >= 90, estudiantes))
+    
+    return sobresalientes
 
 
+# Comprobación
+print(filtrar_estudiantes())
 
 '''
 19. Crea una función lambda que filtre los números impares de una lista dada.
@@ -462,10 +549,19 @@ def seleccionar_int (lista):
 
 seleccionar_int (lista_variada)
 
+# Inciso: Estas funciones las puedo guardar en def () para mantenerlas en el script y poder recurrir a ellas
+# si fuera necesario, pero podrían funcionar en una sóla línea sin guardarse posteriormente
+# esta por ejemplo sería:
+#       lista_variada = ['cadena', 7, 3.2, 'cadenita', 32, 'cadenota', 5, 11] 
+#       print(list(filter(lambda elemento: isinstance(elemento, int), lista_variada)))
 
 '''
 21. Crea una función que calcule el cubo de un número dado mediante una función lambda
 '''
+# Una funciones tan simples como esta (y alguna posterior) no la guardaré con def() para aligerar el código
+# En otros casos puede resultarme útil tener las funciones guardadas y desarrolladas para usar posteriormente
+cubo = lambda x: x ** 3
+print(cubo(3))  # 27
 
 
 '''
@@ -473,18 +569,9 @@ seleccionar_int (lista_variada)
 Usa la función reduce().
 '''
 lista_numerica = [1, 3, 6, 9]
-def producto_total (lista_numeros):
-    """Multiplica todos los numeros de una lsita entre sí
-
-    Args:
-        lista_numeros (lsit): lista sólo con números
-    Return:
-        producto (int, float): un único número
-    """
-    # Reduce importada previamente
-    # La lambda multiplica los elementos y reduce repite este en todo el iterable
-    return reduce(lambda x, y: x*y, lista_numeros) 
-producto_total (lista_numerica)
+# Reduce importada previamente
+# La lambda multiplica los elementos y reduce repite este en todo el iterable
+print(reduce(lambda x, y: x*y, lista_numerica))
 
 '''
 23. Concatena una lista de palabras.Usa la función reduce().
@@ -508,15 +595,16 @@ concatenar_palabras(lista_de_palabras)
 '''
 24. Calcula la diferencia total en los valores de una lista. Usa la función reduce().
 '''
-list = [3, 5, 7, 4, 2, 10]
-#La lambda calcula la difernecia entre los primeros valores de la lista y reduce lo repite en todos los elementos existentes
-print (reduce (lambda x, y: x - y, list))
+ejercicio_24 = [10, 4, 3, 1]
+# Reduce repite la resta de los dos primeros números con el siguiente de la lista
+resultado = reduce(lambda x, y: x - y, ejercicio_24)
+print(resultado)
 
 '''
 25. Crea una función que cuente el número de caracteres en una cadena de texto dada.
 '''
-variable_cadena = 'cadena de texto cualquiera'
-
+# En este caso al generar una def() podré usarlo con variables o cadenas directamente
+ejercicio_25 = 'cadena para contar caracteres'
 def contar_caracteres (cadena):
     """Cuenta los caracteres de una cadena
 
@@ -524,306 +612,302 @@ def contar_caracteres (cadena):
         cadena (_type_): _description_
     """
     return len(cadena) #La función len() indica los caracteres que tiene una cadena 
-
 #Comprobación con variable y cadena directamente
+contar_caracteres (ejercicio_25)
 contar_caracteres ('cinco')
-contar_caracteres (variable_cadena) 
 
 '''
+26. Crea una función lambda que calcule el resto de la división entre dos números dados.
+'''
+def calcular_resto (numero, numerito):
+    resto = lambda x, y: x % y
+    # Con % recibo el resto de la dvisión
+    return resto
 
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
-
-'''
-
-
-'''
+# En una única línea
+print ((lambda x, y: x % y)(15, 8))
+
+'''
+27. Crea una función que calcule el promedio de una lista de números. 
+'''
+# Creo una lista para la comprobacion
+ejercicio_27 = [3, 6, 9, 18]
+
+def media (lista):
+    return sum(lista) / len(lista) #Hago sumo los elementos de la lista y divido entre la cantidad de estos
+
+# Comprobación
+media (ejercicio_27)
+
+'''
+28. Crea una función que busque y devuelva el primer elemento duplicado en una lista dada.
+'''
+ejercicio_28 = [3, 6, 82, 5, 3, 82, 7] 
+sin_duplis = [3, 6, 7] 
+
+def primer_dupli (lista):
+    """ Encuentra el primer duplicado unicamente 
+    Args:
+        lista (list): _description_
+    
+    Return: 
+        primer_duplicado (___________________): primer elemento duplicado de la lista
+    """
+    vistos = [ ] # Creo una lista vacía donde se irán añadiendo los elementos
+    
+    for elemento in lista: # Recorro en orden la lista con el bucle
+        if elemento in vistos: 
+            return elemento # El primer elemento que se repite, la función lo devuelve
+        vistos.append(elemento)
+    
+    return print ('No hay duplicados') # Respuesta en caso de que no haya duplicados
+
+# Comprobación
+primer_dupli (ejercicio_28)
+primer_dupli (sin_duplis)
+
+'''
+29. Crea una función que convierta una variable en una cadena de texto y enmascare
+todos los caracteres con el carácter '#', excepto los últimos cuatro.
+'''
+def ocultar_menos4(variable):
+    """
+    Convierte la variable en cadena y enmascara todos los caracteres con '#'
+    excepto los últimos cuatro.
+    """
+    texto = str(variable)
+    
+    if len(texto) <= 4:
+        return texto  # Como los últimos 4 caracteres no se enmascaran, devuelvo la variable tal cual
+    
+    else:
+        return "#" * (len(texto) - 4) + texto[-4:] 
+        # Convierto todo el texto -4 por #### y añado los últimos 4 últimos elementos del texto
+
+
+# Compronación
+print(ocultar_menos4(123456789))
+print(ocultar_menos4("abcdefg"))
+print(ocultar_menos4("123"))
+
+'''
+30. Crea una función que determine si dos palabras son anagramas, es decir,
+si están formadas por las mismas letras pero en diferente orden.
+'''
+# Creo variables para comprobar el funcionamiento de la función
+anagrama_1 = 'Lobos'
+anagrama_2 = 'Bolos'
+anagrama_falso = 'bingo'
+
+def evaluar_anagramas (palabra_1, palabra_2):
+    """ Compara cadenas de texto para saber si son anagramas
+    Args:
+        palabra_1, palabra_2 (str): cadenas de texto
+    Return:
+        (bool): True si son anagramas, False si no lo son
+    """
+    # Convierto las palabras en sets de letras
+    # Incluyo .lower() para que no se identifiquen como diferentes una misma letra en mayúsculas y minúsculas
+    # En un set el orden de los elementos no importa, así podemos comparar las letras indistintamente
+    if (set(palabra_1.lower())) == set(palabra_2.lower()):
+        print (f'{palabra_1} y {palabra_2} son anagramas')
+    else: 
+        print (f'{palabra_1} y {palabra_2} no son anagramas')   
+
+# Compruebo el funcionamiento 
+evaluar_anagramas (anagrama_1, anagrama_2)
+evaluar_anagramas (anagrama_1, anagrama_falso)
+
+'''
+31. Crea una función que solicite al usuario ingresar una lista de nombres y luego
+solicite un nombre para buscar en esa lista. Si el nombre está en la lista,
+se imprime un mensaje indicando que fue encontrado, de lo contrario, se lanza una excepción.
+'''
+def buscar_nombres():
+    """ 
+    Pide al usuario una lista de nombres y luego un nombre para buscarlo en esa misma lista:
+        Si se encuentra el nombre se escribe: '¡Genial! El nombre "{nombre_a_buscar}" se encuentra en la lista'
+        Si no se encuentra se escribe: 'Lo siento, el nombre "{nombre_a_buscar}" no se encuentra en la lista'
+    """
+    # Pido al usuario la lista 
+    lista_usuario = input ('Escribe la lista de nombres que desees (deben estar separados por comas):')
+    # Establezco la coma como separador limpiando los espacios
+    nombres = [nombre.strip() for nombre in lista_usuario.split(",")] 
 
-'''
-
-
-'''
-
-'''
-
+    # Pido el nombre que busacar en la lista
+    nombre_a_buscar = input('Escribe el nombre que quieres buscar en la lista: ').strip()
+    # Compruebo si el nombre está en la lista
+    if nombre_a_buscar in nombres: 
+        print(f'¡Genial! El nombre "{nombre_a_buscar}" se encuentra en la lista')
 
+    else: 
+        print(f'Lo siento, el nombre "{nombre_a_buscar}" no se encuentra en la lista')
+
+'''
+32. Crea una función que tome un nombre completo y una lista de empleados,
+busque el nombre completo en la lista y devuelve el puesto del empleado si está en la lista,
+de lo contrario, devuelve un mensaje indicando que la persona no trabaja aquí.
 '''
+mis_empleados = [
+    {'nombre': 'Ana Gutiérrez', 'puesto': 'Analista de datos'},
+    {'nombre': 'Paula López', 'puesto': 'Comunicadora'},
+    {'nombre': 'Alvarito Castro', 'puesto': 'Matemático'}
+]
 
-'''
-
+def buscar_puesto(nombre_completo, lista_de_empleados):
+    """
+    Busca el nombre completo en la lista de empleados y devuelve el puesto.
+    Si no se encuentra, devuelve un mensaje indicando que no trabaja aquí.
 
-'''
+    Args:
+        nombre_completo (str): nombre del empleado/a
+        lista_de_empleados (dicc): grupo de empleados
 
-'''
+    Reurn:
+        Si el nombre es correcto (str): f'El puesto de {nombre_completo} es {puesto}')
+        Si no lo es (str): f'{nombre_completo} no trabaja aquí.'
+    """
+    for emp in lista_de_empleados:
+        if emp['nombre'] == nombre_completo:
+            return print(f'El puesto de {nombre_completo} es {emp['puesto']}')
+    
+    return f'{nombre_completo} no trabaja aquí.'
 
+# Comprabación
+buscar_puesto ('Paula López', mis_empleados)
+buscar_puesto ('Jaimito', mis_empleados)
 
 '''
-
+33. Crea una función lambda que sume elementos correspondientes de dos listas dadas
 '''
+# De nuevo no guardo la función como def y la uso con la lambda sólo en esta variable
+sumar_listas = lambda lista1, lista2: list(map(lambda x, y: x + y, lista1, lista2))
+# La lambda suma los elementos y map lo repite uno tras otro. List hace que se devuelva una lista
 
-'''
+# Comprobación
+print(sumar_listas([1, 2, 3], [4, 5, 6])) 
 
 '''
+34. Crea la clase Arbol , define un árbol genérico con un tronco y ramas como atributos. Los métodos disponibles son:
+crecer_tronco , nueva_rama , crecer_ramas , quitar_rama e info_arbol . El objetivo es implementar estos métodos para
+manipular la estructura del árbol.
 
-
-'''
+Código a seguir:
+    1. Inicializar un árbol con un tronco de longitud 1 y una lista vacía de ramas.
+    2. Implementar el método crecer_tronco para aumentar la longitud del tronco en una unidad.
+    3. Implementar el método nueva_rama para agregar una nueva rama de longitud 1 a la lista de ramas.
+    4. Implementar el método crecer_ramas para aumentar en una unidad la longitud de todas las ramas existentes.
+    5. Implementar el método quitar_rama para eliminar una rama en una posición específica.
+    6. Implementar el método info_arbol para devolver información sobre la longitud del tronco, el número de ramas y las longitudes de las mismas.
 
+Caso de uso:
+    1. Crear un árbol.
+    2. Hacer crecer el tronco del árbol una unidad.
+    3. Añadir una nueva rama al árbol.
+    4. Hacer crecer todas las ramas del árbol una unidad.
+    5. Añadir dos nuevas ramas al árbol.
+    6. Retirar la rama situada en la posición 2.
+    7. Obtener información sobre el árbol.
 '''
 
 
 '''
+36. Crea la clase UsuarioBanco ,representa a un usuario de un banco con su nombre, saldo y si tiene o no cuenta corriente.
+Proporciona métodos para realizar operaciones como retirar dinero, transferir dinero desde otro usuario y agregar dinero al saldo.
 
-'''
-
-
-'''
+Código a seguir:
+    1. Inicializar un usuario con su nombre, saldo y si tiene o no cuenta corriente mediante True y False .
+    2. Implementar el método retirar_dinero para retirar dinero del saldo del usuario. Lanzará un error en caso de no poder hacerse.
+    3. Implementar el método transferir_dinero para realizar una transferencia desde otro usuario al usuario actual.Lanzará un error en caso de no poder hacerse.
+    4. Implementar el método agregar_dinero para agregar dinero al saldo del usuario.
 
+Caso de uso:
+    1. Crear dos usuarios: "Alicia" con saldo inicial de 100 y "Bob" con saldo inicial de 50, ambos con cuenta corriente.
+    2. Agregar 20 unidades de saldo de "Bob".
+    3. Hacer una transferencia de 80 unidades desde "Bob" a "Alicia".
+    4. Retirar 50 unidades de saldo a "Alicia".
 '''
 
 
 '''
+37. Crea una función llamada procesar_texto que procesa un texto según la opción especificada: contar_palabras,
+reemplazar_palabras, eliminar_palabra. Estas opciones son otras funciones que tenemos que definir primero y llamar dentro
+de la función procesar_texto.
 
-'''
-
-
-'''
+Código a seguir:
+    1. Crear una función contar_palabras para contar el número de veces que aparece cada palabra en el texto.
+    Tiene que devolver un diccionario.
+    2. Crear una función reemplazar_palabras para remplazar una palabra_original del texto por una palabra_nueva.
+    Tiene que devolver el texto con el remplazo de palabras.
+    3. Crear una función eliminar_palabra para eliminar una palabra del texto.
+    Tiene que devolver el texto con la palabra eliminada.
+    4. Crear la función procesar_texto que tome un texto, una opción(entre "contar", "reemplazar", "eliminar")
+    y un número de argumentos variable según la opción indicada.
 
+Caso de uso:
+Comprueba el funcionamiento completo de la función procesar_texto
 '''
 
 
 '''
-
+38. Genera un programa que nos diga si es de noche, de día o tarde según la hora proporcionada por el usuario
 '''
 
 
 '''
-
+39. Escribe un programa que determine qué calificación en texto tiene un alumno en base a su calificación numérica.
+Las reglas de calificación son:
+- 0 - 69 insuficiente
+- 70 - 79 bien
+- 80 - 89 muy bien
+- 90 - 100 excelente
 '''
 
+def determinar_nota (cali_num):
+    """ 
+    Introduciendo una calificación numérica, establece por rangos la calificación como 'insuficiente', 'bien', 'muy bien' o 'sobresaliente'
+    Args:
+        cali_num (float): calificación numérica
+    Return: 
+        calificación (str): puede ser 'insuficiente', 'bien', 'muy bien' o 'sobresaliente'
+    """
+    # Enlazo condicionales con los rangos de las diferentes calificaciones
+    if cali_num <= 69:
+        print ('La calificación es: insuficiente')
 
-'''
+    elif 70 <= cali_num <= 79:
+        print ('La calificación es: bien')
 
-'''
+    elif 80 <= cali_num <= 89:
+        print ('La calificación es: muy bien')
+    
+    elif 90 <= cali_num <= 100: 
+        print ('La calificación es: sobresaliente')
 
+# Comprobación
+determinar_nota (32)
+determinar_nota (83)
+determinar_nota (96.2)
 
 '''
+40. Escribe una función que tome dos parámetros: figura (una cadena que puede ser "rectangulo" , "circulo" o
+"triangulo" ) y datos (una tupla con los datos necesarios para calcular el área de la figura).
 
 '''
 
 
 '''
-
+41. En este ejercicio, se te pedirá que escribas un programa en Python que utilice condicionales para determinar el
+monto final de una compra en una tienda en línea, después de aplicar un descuento. El programa debe hacer lo
+siguiente:
+    1. Solicita al usuario que ingrese el precio original de un artículo.
+    2. Pregunta al usuario si tiene un cupón de descuento (respuesta sí o no).
+    3. Si el usuario responde que sí, solicita que ingrese el valor del cupón de descuento.
+    4. Aplica el descuento al precio original del artículo, siempre y cuando el valor del cupón sea válido
+    (es decir, mayor a cero). Por ejemplo, descuento de 15€.
+    5. Muestra el precio final de la compra, teniendo en cuenta el descuento aplicado o sin él.
+    6. Recuerda utilizar estructuras de control de flujo como if, elif y else
+    para llevar a cabo estas acciones en tu programa de Python.
 '''
-
 
-'''
 
-'''
-import os

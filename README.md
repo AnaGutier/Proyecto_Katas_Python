@@ -21,7 +21,8 @@ Enunciados #Enunciados
 Comentar que realizo los ejercicios en jupyter para no hacer lío en la terminal, y para facilidad de todo el que quiera acceder a los ejercicios ya que es un repositorio público y de libre acceso como me gusta, aunque adjunto el script completo como se requiere en las instrucciones del proyecto.
 
 ## 3. Fases de realización del proyecto
-
+ - Ejercicios hacer 
+ - Comprobacioones de ejercicios con inputs en otro archivo .py, resulotiva ella jejej
 ## 4. Resultados y conclusiones
 
 - Se han resuelto las consultas requeridas... PONIENDO EN VALOR AQUÍ MIS HABILIDADES UN POCO

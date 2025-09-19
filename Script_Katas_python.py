@@ -1038,12 +1038,138 @@ Código a seguir:
 Caso de uso:
 Comprueba el funcionamiento completo de la función procesar_texto
 '''
+# Primero defino la función para contar las palabras
+def contar_palabras(texto):
+    """
+    Función que cuenta cuántas veces aparece cada palabra en el texto.
+    Args:
+        texto (str): texto de entrada
+    Return:
+        dict: diccionario con palabras como claves y número de apariciones como valores
+    """
+    # Divido el texto en palabras separadas por espacios
+    palabras = texto.split()
+    conteo = {} # Genero el diccionario
+    # Recorro cada palabra y voy sumando en el diccionario
+    for palabra in palabras:
+        palabra = palabra.strip('.,!?;:').lower() # Quito signos básicos y todo paso a minúsculas para sistematizarlo
+        if palabra in conteo: # Hago el conteo de palabras y
+            conteo[palabra] += 1 # Las sumo si se repiten
+        else:
+            conteo[palabra] = 1 # Si sólo salen una vez, saldrá 1 como numero de apariciones 
+    return conteo
+
+
+# Defino la función para reemplazar palabras
+def reemplazar_palabras(texto, palabra_original, palabra_nueva):
+    """
+    Función que reemplaza una palabra por otra en el texto.
+    Args:
+        texto (str): texto de entrada
+        palabra_original (str): palabra que quiero reemplazar
+        palabra_nueva (str): palabra por la que se reemplaza
+    Return:
+        str: texto con el reemplazo hecho
+    """
+    # Uso replace para cambiar todas las ocurrencias
+    return texto.replace(palabra_original, palabra_nueva)
+
+
+# Defino la función para eliminar palabras
+def eliminar_palabra(texto, palabra_eliminar):
+    """
+    Función que elimina una palabra específica del texto.
+    Args:
+        texto (str): texto de entrada
+        palabra_eliminar (str): palabra que quiero eliminar
+    Return:
+        (str): texto con la palabra eliminada
+    """
+    palabras = texto.split()
+    palabra_eliminar_norm = palabra_eliminar.strip('.,!?;:').lower()
+    nuevas_palabras = []
+    # Recorro las palabras originales; comparo cada palabra en lower
+    # y sólo añado a nuevas_palabras la que NO coincida con la palabra a eliminar.
+    for p in palabras:
+        p_norm = p.strip('.,!?;:').lower()
+        if p_norm == palabra_eliminar_norm:
+            # ignoro la palabra introducida (la elimino)
+            continue
+        else:
+            # Conservo la palabra tal cual (con su puntuación)
+            nuevas_palabras.append(p)
+    # Uno las palabras otra vez en un texto
+    return ' '.join(nuevas_palabras)
+
+
+# Creo la función principal que llama a las anteriores
+def procesar_texto(texto, opcion, *args):
+    """
+    Función que procesa un texto según la opción indicada: contar, reemplazar o eliminar.
+    Args:
+        texto (str): texto de entrada
+        opcion (str): tipo de operación ("contar", "reemplazar" o "eliminar")
+        *args: argumentos adicionales dependiendo de la opción
+    Return:
+        resultado variable: diccionario o texto modificado
+    """
+    if opcion == 'contar':
+        return contar_palabras(texto)
+    elif opcion == 'reemplazar':
+        if len(args) != 2: # Lanzo un error si no se insertan los valores necesarios
+            raise ValueError('Para reemplazar necesito palabra_original y palabra_nueva')
+        return reemplazar_palabras(texto, args[0], args[1])
+    elif opcion == 'eliminar':
+        if len(args) != 1:
+            raise ValueError('Para eliminar necesito palabra_eliminar') # De nuevo un error si no se inserta lo necesario
+        return eliminar_palabra(texto, args[0])
+    else:
+        raise ValueError('Opción no válida. Usa "contar", "reemplazar" o "eliminar".')
+
+
+# Caso de uso
+mi_texto = 'Hola, buen día. Hoy es un día soleado. Que el día sea soledao me hace feliz.'
+
+# 1. Contar palabras
+print('Contar palabras:')
+print(procesar_texto(mi_texto, 'contar'))
+
+# 2. Reemplazar palabra
+print('Reemplazar palabra:')
+print(procesar_texto(mi_texto, 'reemplazar', 'feliz', 'bailar'))
+
+# 3. Eliminar palabra
+print('Eliminar palabra:')
+print(procesar_texto(mi_texto, 'eliminar', 'Hola'))
 
 
 '''
 38. Genera un programa que nos diga si es de noche, de día o tarde según la hora proporcionada por el usuario
 '''
+# Importo datetime para trabajar con horas
+import datetime
 
+def momento_del_dia():
+    """
+    Determina si es de día, tarde o noche según la hora insertada o en su defecto la actual del sistema.
+    """
+    try:
+        # Pido al usuario la hora y convierto el input en un número entero de hora
+        hora_usuario = input("Introduce la hora en formato 24h (HH:MM): ")
+        hora_actual = int(hora_usuario.split(":")[0])
+
+        # Clasificamos según las franjas horarias
+        if 7 <= hora_actual < 16:
+            print('Es de día')
+        elif 16 <= hora_actual < 21:
+            print('Es por la tarde')
+        else:
+            print('Es de noche')
+
+    except ValueError: # En caso de que no se introduzca bien la hora, aparece este error
+        print("Error: Debes introducir la hora en formato correcto (HH:MM).")
+
+# Realizo las comprobaciones en otro archivo .py 
 
 '''
 39. Escribe un programa que determine qué calificación en texto tiene un alumno en base a su calificación numérica.
@@ -1085,7 +1211,43 @@ determinar_nota (96.2)
 "triangulo" ) y datos (una tupla con los datos necesarios para calcular el área de la figura).
 
 '''
+#Importo math porque al trabajar con operaciones matemáticas (usar el número pi, por ejemplo) resulta útil
+import math 
 
+def calcular_area(figura, datos):
+    """
+    Calcula el área de una figura geométrica.
+    
+    Args:
+        figura (str): puede ser 'rectángulo', 'circulo' o 'triangulo'.
+        datos (tuple): valores necesarios para el cálculo:
+            - rectángulo: (base, altura)
+            - circulo: (radio,)
+            - triangulo: (base, altura)
+    
+    Returns:
+        float: área de la figura
+    """
+    # Al ser diferentes figuras, genero con un condicional un caso con la fórmula para el área de cada una 
+    if figura.lower() == 'rectángulo':
+        base, altura = datos
+        return base * altura
+    
+    elif figura.lower() == 'circulo':
+        (radio,) = datos   # la coma indica que es una tupla de un solo valor
+        return math.pi * (radio ** 2)
+    
+    elif figura.lower() == 'triangulo':
+        base, altura = datos
+        return (base * altura) / 2
+    
+    else: # En caso de que se intente calcular otra figura, lanzo un error
+        raise ValueError('Figura no reconocida. Debes introucir los datos para: "rectángulo", "circulo" o "triangulo".')
+
+# Comprobación
+print(calcular_area('rectángulo', (13, 2)))   
+print(calcular_area('circulo', (8,)))        
+print(calcular_area('triangulo', (9, 1)))   
 
 '''
 41. En este ejercicio, se te pedirá que escribas un programa en Python que utilice condicionales para determinar el
@@ -1100,5 +1262,38 @@ siguiente:
     6. Recuerda utilizar estructuras de control de flujo como if, elif y else
     para llevar a cabo estas acciones en tu programa de Python.
 '''
+def calcular_precio_final():
+    try:
+        # Prenunto el precio original
+        precio_original = float(input('Introduce el precio original del artículo (€): '))
 
+        # Pregunto por el cupón
+        tiene_cupon = input('¿Tienes un cupón de descuento? (si/no): ').strip().lower()
 
+        # Si tiene cupón, pido su valor
+        if tiene_cupon == 'sí' or tiene_cupon == 'si':
+            valor_cupon = float(input('Introduce el valor del cupón (__€): '))
+            
+            # Verifico que el cupón sea válido
+            if valor_cupon > 0:
+                precio_final = precio_original - valor_cupon
+                if precio_final < 0:  # Evitamos precios negativos
+                    precio_final = 0
+                print(f'Has aplicado un descuento de {valor_cupon}€. El precio final es: {precio_final:}€')
+            else:
+                print('El valor del cupón no es válido. No se aplicará descuento.')
+                print(f'El precio final es: {precio_original}€')
+
+        elif tiene_cupon == 'no':
+            # No hay cupón
+            print(f'El precio final es: {precio_original}€')
+
+        else: 
+            # En caso de que se introduzca algo que no sea si o no
+            print('Respuesta no válida. Debes responder "sí" o "no".')
+
+    except ValueError:
+            # En caso de que se introduzca un valor no válido
+        print('Error: Debes introducir números válidos para el precio o el cupón.')
+
+# Realizo las comprobaciones en otro archivo .py 

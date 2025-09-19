@@ -85,3 +85,65 @@ def buscar_nombres():
 #if __name__ == "__main__":
     #buscar_nombres()
 
+# Importo datetime para trabajar con horas
+import datetime
+
+def momento_del_dia():
+    """
+    Determina si es de día, tarde o noche según la hora insertada o en su defecto la actual del sistema.
+    """
+    try:
+        # Pido al usuario la hora y convierto el input en un número entero de hora
+        hora_usuario = input("Introduce la hora en formato 24h (HH:MM): ")
+        hora_actual = int(hora_usuario.split(":")[0])
+
+        # Clasificamos según las franjas horarias
+        if 7 <= hora_actual < 16:
+            print('Es de día')
+        elif 16 <= hora_actual < 21:
+            print('Es por la tarde')
+        else:
+            print('Es de noche')
+
+    except ValueError: # En caso de que no se introduzca bien la hora, aparece este error
+        print("Error: Debes introducir la hora en formato correcto (HH:MM).")
+
+#if __name__ == "__main__":
+    #momento_del_dia()
+
+def calcular_precio_final():
+    try:
+        # Prenunto el precio original
+        precio_original = float(input('Introduce el precio original del artículo (€): '))
+
+        # Pregunto por el cupón
+        tiene_cupon = input('¿Tienes un cupón de descuento? (si/no): ').strip().lower()
+
+        # Si tiene cupón, pido su valor
+        if tiene_cupon == 'sí' or tiene_cupon == 'si':
+            valor_cupon = float(input('Introduce el valor del cupón (__€): '))
+            
+            # Verifico que el cupón sea válido
+            if valor_cupon > 0:
+                precio_final = precio_original - valor_cupon
+                if precio_final < 0:  # Evitamos precios negativos
+                    precio_final = 0
+                print(f'Has aplicado un descuento de {valor_cupon}€. El precio final es: {precio_final:}€')
+            else:
+                print('El valor del cupón no es válido. No se aplicará descuento.')
+                print(f'El precio final es: {precio_original}€')
+
+        elif tiene_cupon == 'no':
+            # No hay cupón
+            print(f'El precio final es: {precio_original}€')
+
+        else: 
+            # En caso de que se introduzca algo que no sea si o no
+            print('Respuesta no válida. Debes responder "sí" o "no".')
+
+    except ValueError:
+            # En caso de que se introduzca un valor no válido
+        print('Error: Debes introducir números válidos para el precio o el cupón.')
+
+if __name__ == "__main__":
+    calcular_precio_final()

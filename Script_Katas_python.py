@@ -809,6 +809,116 @@ Caso de uso:
     6. Retirar la rama situada en la posición 2.
     7. Obtener información sobre el árbol.
 '''
+class Arbol: #Creo la clase
+    """
+    Clase que representa a un arbol, con tronco y ramas.
+
+    Métodos disponibles: crecer_tronco , nueva_rama , crecer_ramas , quitar_rama e info_arbol
+    """
+    def __init__(self, tronco = 1.0, ramas=None):
+         """ 
+        Método constructor
+        Args:
+            tronco (float): número de metros que tiene el tronco del árbol (por defecto 1.0)
+            ramas (lsit): lsita de ramas y longitud de estas (lista vacía por defecto)
+        """
+         self.tronco = float(tronco)
+         self.ramas = list(ramas) if ramas is not None else []
+
+    def crecer_tronco(self, cantidad = 1.0):
+        """
+        Método que hace crecer el tronco en `cantidad` (por defecto 1) y devuelve la nueva longitud del tronco.
+         Args:
+            centidad (float) = cantidad que crece el tronco 
+         Return: 
+            self.tronco (float) = nueva longitud del tronco
+        """
+        self.tronco += float(cantidad)
+        return self.tronco
+
+    def nueva_rama(self, longitud = 1.0):
+        """
+        Método que añade una nueva rama con longitud `longitud` (por defecto 1) y devuelve el número actual de ramas.
+         Args:
+            longitud (float) = nueva rama de longitud indicada o 1 por defecto
+         Return: 
+            len(self.ramas) (float) = nueva cantidad de ramas
+        """
+        self.ramas.append(float(longitud)) # El append añade la nueva rama a la lista
+        return len(self.ramas)
+
+    def crecer_ramas(self, cantidad = 1.0):
+        """
+        Método para hacer crecer todas las ramas en la cantidad indicada (por defecto 1) y devuelve la lista actualizada de longitudes de ramas.
+        Args:
+            cantidad (float) = cantidad que crecen las ramas
+         Return: 
+            self.ramas (list) = nueva lista con las diferentes ramas
+        """
+        self.ramas = [r + float(cantidad) for r in self.ramas] #Itero la lista para sumar a todas las ramas la longitud nevesaria
+        return self.ramas
+
+    def quitar_rama(self, posicion):
+        """
+        Método que quita la rama en la posición indicada (1-based) y devuelve la longitud de la rama eliminada.
+        Si la posicion no es válida, lanza IndexError.
+        Args:
+            posicion (int) = posición de la rama a eliminar en la lista
+         Return: 
+            rama_eliminada (list) = nueva lista con las diferentes ramas
+        """
+        indice = posicion - 1
+        if indice < 0 or indice >= len(self.ramas): #Para el caso de que se intente quitar una rama en posición no válida
+            raise IndexError(f'Posición fuera de rango. Debe estar entre 1 y {len(self.ramas)}.') 
+        rama_eliminada = self.ramas.pop(indice) # Si no hay problemas, el pop saca la rama de la lista
+        return rama_eliminada 
+
+    def info_arbol(self):
+        """
+        Se devuelve un diccionario con la información del árbol:
+         - tronco: longitud del tronco
+         - numero_ramas: cantidad de ramas
+         - longitudes_ramas: lista de longitudes de cada rama
+
+        Además se devuelve una versión en string en la clave 'descripcion'.
+        """
+        info = {
+            'tronco': self.tronco,
+            'numero_ramas': len(self.ramas),
+            'longitudes_ramas': list(self.ramas)
+        } # Así genero el diccionario con toda la información, lo mantengo porque podría ser interesante trabajar con este formato posteriormente
+        descripcion = (f'El tronco mide {self.tronco} unidades, '
+                       f'tiene {len(self.ramas)} rama(s) con longitudes {self.ramas}.') # Pongo una cadena con toda la información para que sea más legible, mantenieno el dicc por lo comentado anteriormente
+        info['descripcion'] = descripcion 
+        return info
+
+
+# Uso de ejemplo 
+# 1. Crear un árbol.
+arbolito = Arbol()  # Creo el árbol por defecto: con tronco=1.0 y ramas=[]
+
+# 2. Hacer crecer el tronco del árbol una unidad. 
+arbolito.crecer_tronco() # No añado variable porque por defecto indiqué que creciera 1 
+
+# 3. Añadir una nueva rama al árbol.
+arbolito.nueva_rama() # No añado variable porque por defecto indiqué añadir 1 rama
+
+# 4. Hacer crecer todas las ramas del árbol una unidad.
+arbolito.crecer_ramas() # No añado variable porque por defecto indiqué que crecieran 1 
+
+# 5. Añadir dos nuevas ramas al árbol.
+arbolito.nueva_rama(2)
+
+# 6. Retirar la rama situada en la posición 2.
+eliminada = arbolito.quitar_rama(2)
+print(f'Yo he quitado la rama de longitud: {eliminada}')
+
+# 7. Obtener información sobre el árbol.
+arbolito.info_arbol()
+print('Información final del árbol:')
+print(info['descripcion'])
+# Si quiero el diccionario podría pedirlo con:
+print(info)
 
 
 '''
@@ -827,7 +937,88 @@ Caso de uso:
     3. Hacer una transferencia de 80 unidades desde "Bob" a "Alicia".
     4. Retirar 50 unidades de saldo a "Alicia".
 '''
+class UsuarioBanco: # Creo la clase
+    """
+    Clase que representa a un usuario de un banco con nombre, saldo y cuenta corriente.
+    
+    Métodos disponibles: retirar_dinero , transferir_dinero , agregar_dinero
+    """
+    def __init__(self, nombre, saldo = 0.0, cuenta_corriente = False):
+        """ 
+        Método constructor
+        Args:
+            nombre (str): nombre del usuario
+            saldo (float): cantidad de dinero inicial (por defecto 0.0)
+            cuenta_corriente (bool): indica si tiene cuenta corriente (True o False, por defecto False)
+        """
+        self.nombre = str(nombre)
+        self.saldo = float(saldo)
+        self.cuenta_corriente = bool(cuenta_corriente)
 
+    def retirar_dinero(self, cantidad):
+        """
+        Método que retira dinero del saldo del usuario.
+        Si no hay saldo suficiente o no tiene cuenta corriente, lanza un error.
+        Args:
+            cantidad (float): dinero a retirar
+        Return:
+            self.saldo (float): saldo restante tras la operación
+        """
+        if not self.cuenta_corriente:
+            raise ValueError(f'El usuario {self.nombre} no tiene cuenta corriente')
+        if cantidad > self.saldo:
+            raise ValueError(f'Saldo insuficiente para retirar {cantidad}')
+        self.saldo -= float(cantidad)
+        return self.saldo
+
+    def transferir_dinero(self, otro_usuario, cantidad):
+        """
+        Método que transfiere dinero desde otro usuario hacia este usuario.
+        Si no hay saldo suficiente en el otro usuario o no tiene cuenta corriente, lanza un error.
+        Args:
+            otro_usuario (UsuarioBanco): usuario desde el que se transfiere
+            cantidad (float): dinero a transferir
+        Return:
+            self.saldo (float): nuevo saldo del usuario que recibe la transferencia
+        """
+        if not otro_usuario.cuenta_corriente:
+            raise ValueError(f'El usuario {otro_usuario.nombre} no tiene cuenta corriente')
+        if cantidad > otro_usuario.saldo:
+            raise ValueError(f'El usuario {otro_usuario.nombre} no tiene saldo suficiente')
+        otro_usuario.saldo -= float(cantidad)
+        self.saldo += float(cantidad)
+        return self.saldo
+
+    def agregar_dinero(self, cantidad):
+        """
+        Método que agrega dinero al saldo del usuario.
+        Args:
+            cantidad (float): dinero a añadir
+        Return:
+            self.saldo (float): nuevo saldo tras la operación
+        """
+        if not self.cuenta_corriente:
+            raise ValueError(f'El usuario {self.nombre} no tiene cuenta corriente')
+        self.saldo += float(cantidad)
+        return self.saldo
+
+# Caso de uso
+
+# 1. Creo los dos usuarios
+Alicia = UsuarioBanco('Alicia', saldo = 100, cuenta_corriente = True) #Creo a Alicia con 100
+Bob = UsuarioBanco('Bob', saldo = 50, cuenta_corriente = True) #Creo a Bob con 50
+
+# 2. Agrego 20 unidades de saldo de Bob
+Bob.agregar_dinero(20)
+print(f'Bob ahora tiene {Bob.saldo}')
+
+# 3. Hago una transferencia de 80 unidades desde Bob a Alicia
+Alicia.transferir_dinero(Bob, 80)
+print(f'Alicia ahora tiene {Alicia.saldo} y Bob tiene {Bob.saldo}')
+
+# 4. Retiro 50 unidades de saldo a Alicia
+Alicia.retirar_dinero(50)
+print(f'Alicia ahora tiene {Alicia.saldo}')
 
 '''
 37. Crea una función llamada procesar_texto que procesa un texto según la opción especificada: contar_palabras,

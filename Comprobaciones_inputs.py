@@ -145,5 +145,5 @@ def calcular_precio_final():
             # En caso de que se introduzca un valor no válido
         print('Error: Debes introducir números válidos para el precio o el cupón.')
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     calcular_precio_final()

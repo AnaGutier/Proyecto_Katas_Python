@@ -1261,7 +1261,7 @@ siguiente:
     5. Muestra el precio final de la compra, teniendo en cuenta el descuento aplicado o sin él.
     6. Recuerda utilizar estructuras de control de flujo como if, elif y else
     para llevar a cabo estas acciones en tu programa de Python.
-'''
+''' 
 def calcular_precio_final():
     try:
         # Prenunto el precio original

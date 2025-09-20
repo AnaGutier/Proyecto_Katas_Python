@@ -22,11 +22,15 @@ https://s3.amazonaws.com/staticcontent.thepowermba/Bootcamp+Data+%26+Analytics/D
 ## :open_file_folder: 2. Estructura del repositorio
 Los archivos que contiene este repositorio son los  siguientes:
 ```
-|--> Readme.md #Readme explicativo 
-|--> Script_katas_pyhton.py #Script completo con todos los ejercicios unificados
+|--> EnunciadoDataProjetPython.pdf #Enunciados de los       ejercicios
+|
 |--> Katas_por_separado.ipynb #Script en Jupyter donde he ido realizando los ejercicios y pueden vese y ejecutarse de forma independiente
-|--> EnunciadoDataProjetPython.pdf #Enunciados de los ejercicios
+|
 |--> Comprobaciones_inputs.py # Archivo donde he realizado las comprobaciones de los ejercicios que requerían inputs de un usuario
+|
+|--> Readme.md #Readme explicativo
+| 
+|--> Script_katas_pyhton.py #Script completo con todos los ejercicios unificados
 ```
 
 Comentar que realizo los ejercicios en jupyter para no hacer lío en la terminal, y para facilidad de todo el que quiera acceder a los ejercicios ya que es un repositorio público y de libre acceso como me gusta, aunque adjunto el script completo como se requiere en las instrucciones del proyecto.

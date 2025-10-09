@@ -1,12 +1,5 @@
 # En este archivo se encuentran enunciados y resoluciones del proyecto de lógica: Katas Python
 
-# Aviso preliminar
-# Con el siguiente código he importado list ya que por error la sobreescribí en una variable haciendo que este comando no pudiera cumplir su función.
-# La he recuperado eliminando la variable y poniendo otro nombre en ella e imoprtándola de nuevo con el código que aparece a continuación:
-import builtins 
-list = builtins.list
-
-
 ''' 1. Escribe una función que reciba una cadena de texto como parámetro y devuelva
  un diccionario con las frecuencias de cada letra en la cadena.
  Los espacios no deben ser considerados.
@@ -347,11 +340,11 @@ def preguntar_edad ():
         edad_usuario = round(int(input('Introduce tu edad:'))) 
         # uso int para que en caso de numeros negativos o 0 de Value Error
         # compruebo el rango
-        if edad_usuario < 120:
-            print('Error: por favor, inserta un número válido')
+        if 0 <= edad_usuario <= 120:
+            print(f'Genial, ya veo que tienes {edad_usuario} años')
         
         else:
-            print(f'Genial, ya veo que tienes {edad_usuario} años')
+            print('Error: por favor, inserta un número válido')
         
     except ValueError:
         # Caso 1: no se introduce un número, o este es 0 o negativo
@@ -619,13 +612,11 @@ contar_caracteres ('cinco')
 '''
 26. Crea una función lambda que calcule el resto de la división entre dos números dados.
 '''
-def calcular_resto (numero, numerito):
-    resto = lambda x, y: x % y
-    # Con % recibo el resto de la dvisión
-    return resto
+def calcular_resto (numero, numerito): # Con % recibo el resto de la dvisión
+    return numero % numerito
 
 # En una única línea
-print ((lambda x, y: x % y)(15, 8))
+calcular_resto = lambda x, y: x % y
 
 '''
 27. Crea una función que calcule el promedio de una lista de números. 
@@ -769,7 +760,7 @@ def buscar_puesto(nombre_completo, lista_de_empleados):
     """
     for emp in lista_de_empleados:
         if emp['nombre'] == nombre_completo:
-            return print(f'El puesto de {nombre_completo} es {emp['puesto']}')
+            return f'El puesto de {nombre_completo} es {emp['puesto']}'
     
     return f'{nombre_completo} no trabaja aquí.'
 
@@ -914,7 +905,7 @@ eliminada = arbolito.quitar_rama(2)
 print(f'Yo he quitado la rama de longitud: {eliminada}')
 
 # 7. Obtener información sobre el árbol.
-arbolito.info_arbol()
+info = arbolito.info_arbol()
 print('Información final del árbol:')
 print(info['descripcion'])
 # Si quiero el diccionario podría pedirlo con:
@@ -1271,7 +1262,7 @@ def calcular_precio_final():
         tiene_cupon = input('¿Tienes un cupón de descuento? (si/no): ').strip().lower()
 
         # Si tiene cupón, pido su valor
-        if tiene_cupon == 'sí' or tiene_cupon == 'si':
+        if tiene_cupon in ('sí', 'si'):
             valor_cupon = float(input('Introduce el valor del cupón (__€): '))
             
             # Verifico que el cupón sea válido
